@@ -3,6 +3,7 @@
 import re
 import subprocess
 import sys
+from typing import List, Optional
 
 ALLOWED_BRANCH_PREFIXES = [
     "feature/",
@@ -39,7 +40,7 @@ def branch_name_is_valid(branch_name: str) -> bool:
         return False
 
 
-def main(commit_msg_filepath: str):
+def main(argv: Optional[List] = None):
     """Add the current branch name to the commit message.
 
     The commit message will be prefixed with a conventional commit message friendly version
@@ -47,14 +48,17 @@ def main(commit_msg_filepath: str):
 
     Parameters
     ----------
-    commit_msg_filepath : str
-        The file that contains the commit message.
+    argv : Optional[List]
+        The command line arguments, by default None.
 
     Raises
     ------
     ValueError
         If the branch name is invalid.
     """
+    print(sys.argv)
+    print(sys.argv[1])
+    commit_msg_filepath = sys.argv[1]
     branch_name = subprocess.check_output(
         ["git", "symbolic-ref", "--short", "HEAD"],
         text=True,
@@ -77,4 +81,4 @@ def main(commit_msg_filepath: str):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main()

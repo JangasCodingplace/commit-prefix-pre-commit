@@ -19,6 +19,9 @@ logs/*
 # env
 .env
 
+# build
+build/*
+
 # virtualenv
 venv/*
 env/*
