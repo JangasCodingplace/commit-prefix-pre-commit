@@ -1,14 +1,52 @@
-[tool.poetry]
-name = "commit-prefix-pre-commit"
-version = "v0.0.1"
-description = "A python script to prefix commit messages with conventional commit compatible messages based on the branch name"
-authors = ["JangasCodingplace <janisgoesser92@gmail.com>"]
+[project]
+name = "commit_prefix_pre_commit"
+dynamic = ["version"]
+description = "A python script to prefix commit messages with conventional commit compatible messages based on the branch name."
 readme = "README.md"
-license = "MIT"
-include = ["commit_prefix_pre_commit"]
+license = { file = "LICENSE" }
+classifiers = ["Programming Language :: Python :: 3 :: Only"]
+keywords = ["git", "pre-commit", "conventional-commits"]
+authors = [
+    { name = "JangasCodingplace", email = "janisgoesser92@gmail.com" }
+]
+requires-python = ">=3.9"
+dependencies = []
 
-[poetry.scripts]
+[project.urls]
+code = "https://github.com/JangasCodingplace/commit-prefix-pre-commit"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "build",
+    "coverage",
+    "flake8",
+    "pre-commit",
+    "pytest",
+    "setuptools_scm",
+]
+
+[project.scripts]
 commit-prefix-pre-commit = "commit_prefix_pre_commit.hook:main"
+
+[build-system]
+requires = ["setuptools>=65", "setuptools-scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = [
+    "*.egg-info",
+    ".git",
+    ".pytest_cache",
+    ".vscode",
+]
+
+[tool.setuptools]
+packages = ["commit_prefix_pre_commit"]
+
+[tool.setuptools_scm]
+# intentionally left blank, but we need the section header to activate the tool
 
 [tool.black]
 line-length = 100
@@ -27,14 +65,3 @@ checks = [
     "ES01",
     "GL01",
 ]
-
-[tool.poetry.dependencies]
-python = "^3.10"
-
-
-[tool.poetry.group.dev.dependencies]
-pre-commit = "^3.6.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
