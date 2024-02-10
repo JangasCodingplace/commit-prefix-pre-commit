@@ -5,8 +5,9 @@ description = "A python script to prefix commit messages with conventional commi
 authors = ["JangasCodingplace <janisgoesser92@gmail.com>"]
 readme = "README.md"
 license = "MIT"
+include = ["commit_prefix_pre_commit"]
 
-[project.scripts]
+[poetry.scripts]
 commit-prefix-pre-commit = "commit_prefix_pre_commit.hook:main"
 
 [tool.black]
