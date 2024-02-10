@@ -1,0 +1,7 @@
+- id: commit-prefix
+  name: Commit Prefix
+  entry: commit-prefix-pre-commit
+  language: python
+  description: Conventional Commit compatible prefix with branch name
+  always_run: true
+  stages: [commit-msg]

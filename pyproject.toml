@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "commit-prefix-pre-commit"
+version = "v0.0.1"
+description = "A python script to prefix commit messages with conventional commit compatible messages based on the branch name"
+authors = ["JangasCodingplace <janisgoesser92@gmail.com>"]
+readme = "README.md"
+license = "MIT"
+include = ["commit_prefix_pre_commit"]
+
+[poetry.scripts]
+commit-prefix-pre-commit = "commit_prefix_pre_commit.hook:main"
+
+[tool.black]
+line-length = 100
+
+[flake8]
+max-line-length = 100
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.numpydoc_validation]
+checks = [
+    "all",   # report on all checks, except the below
+    "EX01",
+    "SA01",
+    "ES01",
+    "GL01",
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.6.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
