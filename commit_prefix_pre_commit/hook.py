@@ -3,7 +3,6 @@
 import argparse
 import re
 import subprocess
-import sys
 from typing import List, Optional
 
 ALLOWED_BRANCH_PREFIXES = [
@@ -110,13 +109,18 @@ def main(argv: Optional[List] = None):
         description="Auto Add feature Branch Name to commit message and validate branch names",
     )
     parser.add_argument(
+        "input",
+        type=str,
+        help="A file containing a git commit message",
+    )
+    parser.add_argument(
         "--branch-is-user-prefixed",
         type=bool,
         help="If the branch name is prefixed with a username i.e. jgoesser/fix/ABC-123",
         default=False,
     )
-    commit_msg_filepath = sys.argv[1]
     args = parser.parse_args(argv)
+    commit_msg_filepath = args.input
     branch_name = subprocess.check_output(
         ["git", "symbolic-ref", "--short", "HEAD"],
         text=True,
