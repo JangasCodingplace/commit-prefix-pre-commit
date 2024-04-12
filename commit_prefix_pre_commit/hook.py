@@ -110,7 +110,7 @@ def main(argv: Optional[List] = None):
         description="Auto Add feature Branch Name to commit message and validate branch names",
     )
     parser.add_argument(
-        "branch_is_user_prefixed",
+        "--branch-is-user-prefixed",
         type=bool,
         help="If the branch name is prefixed with a username i.e. jgoesser/fix/ABC-123",
         default=False,
