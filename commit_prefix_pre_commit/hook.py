@@ -34,11 +34,10 @@ def branch_name_is_valid(branch_name: str, branch_is_user_prefixed: bool = False
     bool
         True if the branch name is valid, False otherwise.
     """
-    prefix_regex = "|".join(ALLOWED_BRANCH_PREFIXES)
     if branch_is_user_prefixed:
-        pattern = rf"^[a-z]+/{prefix_regex}/[A-Z]+-\d+"
-    else:
-        pattern = rf"^{prefix_regex}/[A-Z]+-\d+"
+        branch_name = "/".join(branch_name.split("/")[1:])
+    prefix_regex = "|".join(ALLOWED_BRANCH_PREFIXES)
+    pattern = rf"^{prefix_regex}/[A-Z]+-\d+"
 
     if re.match(pattern, branch_name):
         return True
