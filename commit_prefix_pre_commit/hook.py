@@ -87,6 +87,22 @@ def get_branch_context(branch_name: str, branch_is_user_prefixed: bool = False) 
         return "".join(branch_name.split("/")[1:])
 
 
+def branch_is_main(branch_name: str) -> bool:
+    """Check if the branch is the main branch.
+
+    Parameters
+    ----------
+    branch_name : str
+        The name of the branch.
+
+    Returns
+    -------
+    bool
+        True if the branch is the main branch, False otherwise.
+    """
+    return branch_name.lower() in ["main", "master"]
+
+
 def main(argv: Optional[List] = None):
     """Add the current branch name to the commit message.
 
@@ -118,12 +134,23 @@ def main(argv: Optional[List] = None):
         help="If the branch name is prefixed with a username i.e. jgoesser/fix/ABC-123",
         default=False,
     )
+    parser.add_argument(
+        "--allow-main",
+        type=bool,
+        help="Allow main branch to be used for commits",
+        default=False,
+    )
     args = parser.parse_args(argv)
     commit_msg_filepath = args.input
     branch_name = subprocess.check_output(
         ["git", "symbolic-ref", "--short", "HEAD"],
         text=True,
     ).strip()
+
+    if branch_is_main(branch_name) and args.allow_main:
+        return  # Do not add prefix to main branch
+    if branch_is_main(branch_name) and not args.allow_main:
+        raise ValueError("Cannot commit to main branch.")
 
     if not branch_name_is_valid(branch_name, branch_is_user_prefixed=args.branch_is_user_prefixed):
         raise ValueError(f"Branch name '{branch_name}' is invalid.")
